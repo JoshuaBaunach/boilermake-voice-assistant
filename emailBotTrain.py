@@ -12,6 +12,4 @@ def setup():
         chatbot.set_trainer(ListTrainer)
         chatbot.train(convData)
 
-
-
 setup()

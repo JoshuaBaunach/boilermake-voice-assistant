@@ -1,24 +1,13 @@
 categories: 
 - email
 conversations:
-- - Help me write an email
-  - Can you answer some questions for me
-- - I need an email
-  - Ok can you answer some questions for 
-- -help me write an email
-  - Ok, can you answer some questions for 
-- -help me write an email
-  - Ok can you answer some questions for
-- -help me write an email
-  - Ok can you answer some questions for
-- -help me write an email
-  - Ok can you answer some questions for
-- -help me write an email
-- - Help me write an email
-  - Ok, can you answer some questions for 
-- - Sure, what do you need
-  - please tell me your first and last name
-- - my name is Jimmy
-  - ok Jimmy, what is your major
-- - I am studying computer science 
-  - thats awesome! Do you have any skills you would like me to mention? 
+I need to write a professional email.
+Sure. What's your name?
+Josh Baunach
+Got it. What's your major?
+Computer Science
+Got it. What is your professor's name?
+Dr. Harrison.
+Got it. What is the name of the course?
+Machine learning.
+Got it. I wrote the email.
