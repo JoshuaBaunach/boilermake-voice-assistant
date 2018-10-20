@@ -1,11 +1,6 @@
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer 
 
-
-bot = ChatBot('EmailBot')
-bot.set_trainer(ListTrainer)
-
-
 def get_response(userText):
     bot = ChatBot('Bot',
             storage_adapter='chatterbot.storage.SQLStorageAdapter',
@@ -22,11 +17,12 @@ def get_response(userText):
     trainer ='chatterbot.trainers.ListTrainer')
     bot.set_trainer(ListTrainer)
 
+    print('Starting loop')
     while True:
 
         if userText.strip() != 'Bye':
+            print('Getting response')
             result = bot.get_response(userText)
-            reply = bot.get_response(message)
             return(reply)
         if userText.strip() == 'Bye':
             return('Bye')

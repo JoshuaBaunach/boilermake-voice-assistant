@@ -8,8 +8,10 @@ def setup():
     trainer='chatterbot.trainers.ListTrainer')
 
     for file in os.listdir('./trainingData/'):
-
         convData = open(r'./trainingData/' + file,encoding='latin-1').readlines()
         chatbot.set_trainer(ListTrainer)
         chatbot.train(convData)
+
+
+
 setup()
