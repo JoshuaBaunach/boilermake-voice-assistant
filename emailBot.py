@@ -16,11 +16,9 @@ def get_response(userText):
     ],
     trainer='chatterbot.trainers.ListTrainer')
     bot.set_trainer(ListTrainer)
-    while True:
-        if userText.strip()!= 'Bye':
-            result = bot.get_response(userText)                        
-            reply = str(result)
-            return(reply)
-        if userText.strip() == 'Bye':
-            return('Bye')
-            break
+    if userText.strip().lower() != 'bye':
+        result = bot.get_response(userText)                        
+        reply = str(result)
+        return(reply)
+    else:
+        return('Bye')

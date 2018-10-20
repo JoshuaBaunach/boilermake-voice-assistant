@@ -8,9 +8,15 @@ def collect_speech():
     mic = sr.Microphone()
 
     with mic as source:
-        audio = r.listen(source)
+        try:
+            audio = r.listen(source, timeout=10.0)
+        except:
+            return 'I could not understand.'
 
-    recognized_audio = r.recognize_google(audio)
+    try :
+        recognized_audio = r.recognize_google(audio)
+    except:
+        recognized_audio = 'I could not understand.'
     return recognized_audio
 
 if __name__ == '__main__':

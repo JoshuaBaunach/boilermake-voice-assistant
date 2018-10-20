@@ -5,7 +5,7 @@ from voice_interperet import collect_speech
 from emailBot import get_response
 import sys
 
-def main(debug=True):
+def main(debug=False):
     print('Welcome! How can I help?')
     bot_response = ""
     while (bot_response != "Bye"):
@@ -18,4 +18,4 @@ def main(debug=True):
         print(bot_response)
 
 if __name__ == '__main__':
-    main()
+    main(debug=False)
