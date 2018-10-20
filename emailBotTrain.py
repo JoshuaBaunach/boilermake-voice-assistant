@@ -3,7 +3,7 @@ from chatterbot.trainers import ListTrainer
 import os
 
 def setup():
-    chatbot = ChatBot('Bot', 
+    chatbot = ChatBot('Bot',
     storage_adapter='chatterbot.storage.SQLStorageAdapter',
     trainer='chatterbot.trainers.ListTrainer')
 
@@ -12,12 +12,4 @@ def setup():
         convData = open(r'C:/Users/tmanc/OneDrive/ML\chatterbot-corpus-master/chatterbot_corpus/data/email/' + file,encoding='latin-1').readlines()
         chatbot.set_trainer(ListTrainer)
         chatbot.train(convData)
-
-
-
-
-
-
-
-    
 setup()
