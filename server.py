@@ -23,5 +23,5 @@ class ChatServer(WebSocket):
 
 
 
-    #server = SimpleWebSocketServer('', 8000, ChatServer)
-    #server.serveforever()
+    server = SimpleWebSocketServer('', 8000, ChatServer)
+    server.serveforever()
