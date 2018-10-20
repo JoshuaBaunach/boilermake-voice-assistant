@@ -7,10 +7,9 @@ def setup():
     storage_adapter='chatterbot.storage.SQLStorageAdapter',
     trainer='chatterbot.trainers.ListTrainer')
 
-    for file in os.listdir('./):
+    for file in os.listdir('./trainingData/'):
 
-        convData = open(r'htps://github.com/JoshuaBaunach/boilermake-voice-assistant/tree/master
-' + file,encoding='latin-1').readlines()
+        convData = open(r'./trainingData/' + file,encoding='latin-1').readlines()
         chatbot.set_trainer(ListTrainer)
         chatbot.train(convData)
 setup()
