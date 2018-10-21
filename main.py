@@ -25,14 +25,20 @@ class BoilermakeHTTPRequestHandler(BaseHTTPRequestHandler):
         global result_dict
         global current_instruction
 
-        first_instruction = instruction_queue[0]
-        current_instruction = first_instruction[1]
-        instruction_queue.remove(first_instruction)
+        print('Received GET request')
 
         s.send_response(200)
         s.send_header('Content-type', 'text/html')
         s.end_headers()
-        s.wfile.write(first_instruction[0].encode())
+
+        if (len(instruction_queue) > 0):
+            first_instruction = instruction_queue[0]
+            current_instruction = first_instruction[1]
+            instruction_queue.remove(first_instruction)
+
+            s.wfile.write(first_instruction[0].encode())
+        else:
+            s.wfile.write(b'Done! What else do you need?')
 
     def do_POST(s):
         '''
@@ -47,30 +53,32 @@ class BoilermakeHTTPRequestHandler(BaseHTTPRequestHandler):
         global result_dict
         global current_instruction
 
+        print('Received POST request')
+
         to_return = 'Unknown instruction'
 
         if (current_instruction == ""):
-            user_input = get_mic_input(debug=True)
+            user_input = get_mic_input(debug=False)
 
-            if (user_input == 'i need help writing a professional email'):
+            if (user_input.lower() == 'i need help writing a professional email'):
                 instruction_queue = [['Sure. What\'s your name?', 'name'], ['Got it. What is your professor\'s name?', 'professor_name'],
                     ['Got it. What is your major?', 'major'], ['Got it. What year are you?', 'grade'], ['Got it. What are some of your interests?', 'interests']]
-                to_return = 'Instruction: professional email'
+            to_return = user_input
         else:
-            user_input = get_mic_input(debug=True)
+            user_input = get_mic_input(debug=False)
             result_dict[current_instruction] = user_input
+            to_return = user_input
 
             # If the instruction queue is empty, go ahead and build the result string
             if (len(instruction_queue) == 0):
                 current_instruction = ""
-                to_return = str(result_dict)
-                template = open('./templates/email.txt')
+                template = open('./templates/professor_email.txt')
                 template_text = template.read().format(**result_dict)
 
                 # Create lists of each possible combo of emails
                 email_combos = [[]]
-                for line in template_text:
-                    if line == '\n':
+                for line in template_text.split('\n'):
+                    if line == '':
                         email_combos.append([])
                     else:
                         email_combos[len(email_combos)-1].append(line)
@@ -78,7 +86,10 @@ class BoilermakeHTTPRequestHandler(BaseHTTPRequestHandler):
                 # Choose which lines we want to use
                 final_result = ""
                 for combos in email_combos:
-                    final_result += combos[random.randint(0, len(combos))]
+                    if (len(combos) > 1):
+                        final_result += combos[random.randint(0, len(combos)-1)] + '\n'
+                    else:
+                        final_result += combos[0] + '\n'
                 result_file = open('./output/professor_email.txt', 'w')
                 result_file.write(final_result)
 

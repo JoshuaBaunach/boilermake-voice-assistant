@@ -30,14 +30,42 @@
         $("#chat_log").animate({ scrollTop: $("#chat_log")[0].scrollHeight }, 500);
     }
 
+    function getUserInput()
+    {
+        // Post the message to the Python server
+        $.post('http://localhost:8000', function(data) {
+            if (data == '[NO INPUT]')
+            {
+                chat_add_message("I didn't quite get that.", false)
+                getUserInput()
+            }
+            else
+            {
+                chat_add_message(data, true)
+                $.get('http://localhost:8000', function(data) {
+                    chat_add_message(data, false)
+                    getUserInput()
+                })
+            }
+        })
+    }
+
     function sendMessage() {
-	var chat_input = document.getElementById('chat_input')
-	if (chat_input.value != "") {
+        var chat_input = document.getElementById('chat_input')
+        if (chat_input.value != "") {
              var message = chat_input.value;
              chat_input.value = "";
              chat_add_message(message, true);
+
+             // Post the message to the Python server
+             $.post('http://localhost:8000', function(data) {
+                 $.get('http://localhost:8080', function(data) {
+                     chat_add_message(data, false);
+                 })
+             })    
 	    }
     }
+
 		
 </script>
 <style>
@@ -131,5 +159,9 @@
     </div>
 </div>
 
+<script>
+    chat_add_message("Hi! What do you need help with?", false);
+    getUserInput()
+</script>
 </body>
 
