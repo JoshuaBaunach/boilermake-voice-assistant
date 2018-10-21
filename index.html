@@ -5,18 +5,6 @@
 <meta charset="utf-8"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
-    var ws = new WebSocket("ws://localhost:8000");
-    // Close socket when window closes
-    $(window).on('beforeunload', function(){
-       ws.close();
-    });
-    ws.onerror = function(event) {
-        location.reload();
-    }
-    ws.onmessage = function(event)  { 
-        var message_received = event.data;
-        chat_add_message(message_received, false);
-    };
     // Add a message to the chat history
     function chat_add_message(message, isUser) {
         var class_suffix = isUser ? '_user' : '';
@@ -46,7 +34,6 @@
              var message = $(this).val();
              $(this).val("");
              chat_add_message(message, true);
-             ws.send(message);
           }
        });
     });

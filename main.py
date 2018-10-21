@@ -4,6 +4,7 @@ This is the main program that integrates all of the components.
 from voice_interperet import collect_speech
 #from emailBot import get_response
 import sys
+import random
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 
@@ -52,8 +53,8 @@ class BoilermakeHTTPRequestHandler(BaseHTTPRequestHandler):
             user_input = get_mic_input(debug=True)
 
             if (user_input == 'i need help writing a professional email'):
-                instruction_queue = [['Sure. What\'s your name?', 'student_name'], ['Got it. What is your professor\'s name?', 'professor_name'],
-                    ['Got it. What is the course name?', 'course_name']]
+                instruction_queue = [['Sure. What\'s your name?', 'name'], ['Got it. What is your professor\'s name?', 'professor_name'],
+                    ['Got it. What is your major?', 'major'], ['Got it. What year are you?', 'grade'], ['Got it. What are some of your interests?', 'interests']]
                 to_return = 'Instruction: professional email'
         else:
             user_input = get_mic_input(debug=True)
@@ -65,8 +66,21 @@ class BoilermakeHTTPRequestHandler(BaseHTTPRequestHandler):
                 to_return = str(result_dict)
                 template = open('./templates/email.txt')
                 template_text = template.read().format(**result_dict)
-                result_file = open('./output/email.txt', 'w')
-                result_file.write(template_text)
+
+                # Create lists of each possible combo of emails
+                email_combos = [[]]
+                for line in template_text:
+                    if line == '\n':
+                        email_combos.append([])
+                    else:
+                        email_combos[len(email_combos)-1].append(line)
+
+                # Choose which lines we want to use
+                final_result = ""
+                for combos in email_combos:
+                    final_result += combos[random.randint(0, len(combos))]
+                result_file = open('./output/professor_email.txt', 'w')
+                result_file.write(final_result)
 
         s.send_response(200)
         s.send_header('Content-type', 'text/html')
