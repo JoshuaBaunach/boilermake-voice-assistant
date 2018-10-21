@@ -38,7 +38,11 @@ class BoilermakeHTTPRequestHandler(BaseHTTPRequestHandler):
 
             s.wfile.write(first_instruction[0].encode())
         else:
-            s.wfile.write(b'Done! What else do you need?')
+            if (current_instruction != ""):
+                current_instruction = ""
+                s.wfile.write(b'Done! What else do you need?')
+            else:
+                s.wfile.write(b'I didn\'t quite get that.')
 
     def do_POST(s):
         '''
@@ -71,7 +75,6 @@ class BoilermakeHTTPRequestHandler(BaseHTTPRequestHandler):
 
             # If the instruction queue is empty, go ahead and build the result string
             if (len(instruction_queue) == 0):
-                current_instruction = ""
                 template = open('./templates/professor_email.txt')
                 template_text = template.read().format(**result_dict)
 
