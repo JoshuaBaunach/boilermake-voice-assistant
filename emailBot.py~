@@ -1,0 +1,37 @@
+from chatterbot import ChatBot
+from chatterbot.trainers import ListTrainer
+
+>>>>>>> 17c8f2520aac6b47335c3fcbefb61e9dd86939f3
+
+def get_response(userText):
+    bot = ChatBot('Bot',
+                  storage_adapter='chatterbot.storage.SQLStorageAdapter',
+    logic_adapters=[
+        {
+            'import_path': 'chatterbot.logic.BestMatch'
+        },
+        {
+            'import_path': 'chatterbot.logic.LowConfidenceAdapter',
+            'threshold': 0.70,
+            'default_response': 'I am sorry, but I do not understand.'
+        }
+    ],
+    trainer='chatterbot.trainers.ListTrainer')
+    bot.set_trainer(ListTrainer)
+<<<<<<< HEAD
+    
+    while True:
+
+        if userText.strip() != 'Bye':
+            result = bot.get_response(userText)
+            return(result)
+=======
+    while True:
+        if userText.strip()!= 'Bye':
+            result = bot.get_response(userText)                        
+            reply = str(result)
+            return(reply)
+>>>>>>> 3589384834cc3c25b19aa6e0ac6b4da35f26fce1
+        if userText.strip() == 'Bye':
+            return('Bye')
+            break
