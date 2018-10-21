@@ -3,7 +3,9 @@
 <head>
 <title>Chat Bot</title>
 <meta charset="utf-8"/>
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>if (window.module) module = window.module;</script>
 <script>
     // Add a message to the chat history
     function chat_add_message(message, isUser) {
@@ -27,16 +29,16 @@
     function chat_scrolldown() {
         $("#chat_log").animate({ scrollTop: $("#chat_log")[0].scrollHeight }, 500);
     }
-    // If press ENTER, talk to chat and send message to server
-    $(function() {
-       $('#chat_input').on('keypress', function(event) {
-          if (event.which === 13 && $(this).val() != ""){
-             var message = $(this).val();
-             $(this).val("");
+
+    function sendMessage() {
+	var chat_input = document.getElementById('chat_input')
+	if (chat_input.value != "") {
+             var message = chat_input.value;
+             chat_input.value = "";
              chat_add_message(message, true);
-          }
-       });
-    });
+	    }
+    }
+		
 </script>
 <style>
     * {
@@ -111,6 +113,10 @@
 </head>
 
 <body>
+
+<button value="Submit" onclick="sendMessage()">
+
+
 	<div class="row">
 		<div class="col-xs-8">
 			<br>
@@ -118,7 +124,7 @@
 		</div>
 	
 <div id="chat_container">
-    <div id="chat_log">
+	<div id="chat_log">
     </div>
     <div id="chat_input_container">
         <div><input id="chat_input" /></div>
