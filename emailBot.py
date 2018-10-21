@@ -1,7 +1,6 @@
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 
->>>>>>> 17c8f2520aac6b47335c3fcbefb61e9dd86939f3
 
 def get_response(userText):
     bot = ChatBot('Bot',
